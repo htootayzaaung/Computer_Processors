@@ -1,0 +1,33 @@
+CHIP FeistelEncryption
+{
+IN plaintext[16], key[8];
+OUT ciphertext[16];
+
+PARTS:
+Xor(x=key[7], y=key[6], out=ciphertext1);
+Xor(x=key[0], y=key[7], out=ciphertext2);
+Xor(x=key[1], y=key[0], out=ciphertext3);
+Xor(x=key[2], y=key[1], out=ciphertext4);
+Xor(x=key[3], y=key[2], out=ciphertext5);
+Xor(x=key[4], y=key[3], out=ciphertext6);
+Xor(x=key[5], y=key[4], out=ciphertext7);
+Xor(x=key[6], y=key[5], out=ciphertext8);
+
+Xor(x=ciphertext1, y=plaintext[0], out=ciphertext[8]);
+Xor(x=ciphertext2, y=plaintext[1], out=ciphertext[9]);
+Xor(x=ciphertext3, y=plaintext[2], out=ciphertext[10]);
+Xor(x=ciphertext4, y=plaintext[3], out=ciphertext[11]);
+Xor(x=ciphertext5, y=plaintext[4], out=ciphertext[12]);
+Xor(x=ciphertext6, y=plaintext[5], out=ciphertext[13]);
+Xor(x=ciphertext7, y=plaintext[6], out=ciphertext[14]);
+Xor(x=ciphertext8, y=plaintext[7], out=ciphertext[15]);
+
+Xor(x=key[0], y=key[6], out=x020);Xor(x=plaintext[8], y=plaintext[0], out=y020);Xor(x=x020, y=y020, out=z020);Xor(x=z020, y=key[5], out=ciphertext[0]);
+Xor(x=key[1], y=key[7], out=x021);Xor(x=plaintext[9], y=plaintext[1], out=y021);Xor(x=x021, y=y021, out=z021);Xor(x=z021, y=key[6], out=ciphertext[1]);
+Xor(x=key[2], y=key[0], out=x022);Xor(x=plaintext[10], y=plaintext[2], out=y022);Xor(x=x022, y=y022, out=z022);Xor(x=z022, y=key[7], out=ciphertext[2]);
+Xor(x=key[3], y=key[1], out=x023);Xor(x=plaintext[11], y=plaintext[3], out=y023);Xor(x=x023, y=y023, out=z023);Xor(x=z023, y=key[0], out=ciphertext[3]);
+Xor(x=key[4], y=key[2], out=x024);Xor(x=plaintext[12], y=plaintext[4], out=y024);Xor(x=x024, y=y024, out=z024);Xor(x=z024, y=key[1], out=ciphertext[4]);
+Xor(x=key[5], y=key[3], out=x025);Xor(x=plaintext[13], y=plaintext[5], out=y025);Xor(x=x025, y=y025, out=z025);Xor(x=z025, y=key[2], out=ciphertext[5]);
+Xor(x=key[6], y=key[4], out=x026);Xor(x=plaintext[14], y=plaintext[6], out=y026);Xor(x=x026, y=y026, out=z026);Xor(x=z026, y=key[3], out=ciphertext[6]);
+Xor(x=key[7], y=key[5], out=x027);Xor(x=plaintext[15], y=plaintext[7], out=y027);Xor(x=x027, y=y027, out=z027);Xor(x=z027, y=key[4], out=ciphertext[7]);
+}

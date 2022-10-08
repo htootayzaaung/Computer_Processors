@@ -1,0 +1,37 @@
+CHIP cw2 {
+   IN indata[8], enable, load;
+   OUT sout, complete;
+   PARTS:
+
+   Bit(x = indata[0], load = load, out = Bit1);
+   Bit(x = indata[1], load = load, out = Bit2);
+   Bit(x = indata[2], load = load, out = Bit3);
+   Bit(x = indata[3], load = load, out = Bit4);
+   Bit(x = indata[4], load = load, out = Bit5);
+   Bit(x = indata[5], load = load, out = Bit6);
+   Bit(x = indata[6], load = load, out = Bit7);
+   Bit(x = indata[7], load = load, out = Bit8);
+
+     Mux(x = false, y = Bit8, sel = allowinput, out = Mux1); DFF(x = Mux1, out = DFF1);
+     Mux(x = DFF1, y = Bit7, sel = allowinput, out = Mux2); DFF(x = Mux2, out = DFF2);
+     Mux(x = DFF2, y = Bit6, sel = allowinput, out = Mux3); DFF(x = Mux3, out = DFF3);
+     Mux(x = DFF3, y = Bit5, sel = allowinput, out = Mux4); DFF(x = Mux4, out = DFF4);
+     Mux(x = DFF4, y = Bit4, sel = allowinput, out = Mux5); DFF(x = Mux5, out = DFF5);
+     Mux(x = DFF5, y = Bit3, sel = allowinput, out = Mux6); DFF(x = Mux6, out = DFF6);
+     Mux(x = DFF6, y = Bit2, sel = allowinput, out = Mux7); DFF(x = Mux7, out = DFF7);
+     Mux(x = DFF7, y = Bit1, sel = allowinput, out = Mux8); DFF(x = Mux8, out = DFF8, out = sout);
+
+     Or8Way(x[0] = x0, x[1] = x1, x[2] = x2, x[3] = x3, x[4] = x4, x[5] = x5, x[6] = x6, x[7] = x7, out = blockinput);
+
+        Not(x = blockinput, out = passinput);
+        And(x = enable, y = passinput, out = allowinput);
+
+            DFF(x = allowinput, out = x0);
+            DFF(x = x0, out = x1);
+            DFF(x = x1, out = x2);
+            DFF(x = x2, out = x3);
+            DFF(x = x3, out = x4);
+            DFF(x = x4, out = x5);
+            DFF(x = x5, out = x6);
+            DFF(x = x6, out = complete, out=x7);
+}

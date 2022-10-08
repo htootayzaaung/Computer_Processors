@@ -1,0 +1,55 @@
+CHIP CW1Q1 {
+    IN s1, s2, x, y;
+    OUT f;
+
+    PARTS:
+    Not(x=s1, out=nots1);
+    Not(x=s2, out=nots2);
+    Not(x=x, out=notx);
+    Not(x=y, out=noty);
+
+    And(x=nots1, y=nots2, out =nots1ANDnots2);
+    And(x=x, y=y, out=xANDy);
+    And(x=nots1ANDnots2, y=xANDy, out=A);
+
+    And(x=nots1, y=s2, out= nots1ANDs2);
+    And(x=notx, y=y, out=notxANDy);
+    And(x=nots1ANDs2, y=notxANDy, out=B);
+
+    And(x=nots1, y=s2, out=nots1ANDs2a);
+    And(x=x, y=noty, out=xANDnoty);
+    And(x=nots1ANDs2a, y=xANDnoty, out=C);
+
+    And(x=s1, y=nots2, out=s1ANDnots2);
+    And(x=notx, y=y, out=notxANDya);
+    And(x=s1ANDnots2, y=notxANDya, out=D);
+
+    And(x=s1, y=nots2, out=s1ANDnots2a);
+    And(x=x, y=noty, out=xANDnotya);
+    And(x=s1ANDnots2a, y=xANDnotya, out=E);
+
+    And(x=s1, y= nots2, out=s1ANDnots2b);
+    And(x=x, y=y, out=xANDya);
+    And(x=s1ANDnots2b, y=xANDya, out=F);
+
+    And(x=s1, y=s2, out=s1ANDs2);
+    And(x=notx, y=noty, out=notxANDnoty);
+    And(x=s1ANDs2, y= notxANDnoty, out=G);
+
+    And(x=s1, y=s2, out=s1ANDs2a);
+    And(x=notx, y=y, out=notxANDy2);
+    And(x=s1ANDs2a, y=notxANDy2, out=H);
+
+    And(x=s1, y=s2, out=s1ANDs2b);
+    And(x=x, y=y, out=xANDyb);
+    And(x=s1ANDs2b, y=xANDyb, out=I);
+
+    Or(x=A, y=B, out=J);
+    Or(x=J, y=C, out=K);
+    Or(x=K, y=D, out=L);
+    Or(x=L, y=E, out=M);
+    Or(x=M, y=F, out=N);
+    Or(x=N, y=G, out=O);
+    Or(x=O, y=H, out=P);
+    Or(x=P, y=I, out=f);
+}
